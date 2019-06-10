@@ -96,7 +96,7 @@ def get_logging_config_dict(name):
       'disable_existing_loggers': False,
       'formatters': {
           'simple': {
-              'format': ('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+              'format': ('%(asctime)s - [%(shortloc)65s] - %(levelname)s - %(message)s')
           }
       },
       'handlers': {
@@ -327,7 +327,8 @@ def emit(level, message, exc_info=None, **extras):
               'path': path_name,
               'line': line_number,
               'method': method_name
-          }
+          },
+          'shortloc': "{} @ {}:{}".format(method_name, os.path.relpath(path_name, os.path.join(os.getenv('ROOT_DIR', '/'), 'src', 'python')), line_number)
       })
 
 
